@@ -1,15 +1,13 @@
-<div class="d-flex w-100 justify-content-center">
+<div class="container">
 
     <div class="field-area">
-      <img class="field" src="assets/images/field.png">
-
-      <img class="player" src="assets/images/keeper.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/batsman1.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/batsman2.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/bowler.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/cover.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/legside.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/point.png" cdkDragBoundary=".field-area" cdkDrag>
-      <img class="player" src="assets/images/receiver.png" cdkDragBoundary=".field-area" cdkDrag>
+        <img #field class="field" src="assets/images/field.png">
+        <div class="row position-absolute">
+            <ng-container *ngFor="let player of players">
+                <div class="col">
+                    <img class="player" [src]="player" cdkDragBoundary=".field-area" cdkDrag>
+                </div>
+            </ng-container>
+        </div>
     </div>
 </div>
