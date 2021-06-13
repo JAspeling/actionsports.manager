@@ -1,10 +1,16 @@
 <div class="container">
 
     <div class="field-area">
-        <img #field class="field" src="assets/svg/field.svg">
+        <img #field class="field" (load)="fieldLoaded($event)" src="assets/svg/field.svg">
         <div class="row position-absolute">
-                <div *ngFor="let player of players" class="col">
-                    <img class="player" [src]="player.source" cdkDragBoundary=".field-area" cdkDrag>
+                <div *ngFor="let player of players; let index = index" class="col">
+                    <img class="player"
+                         [id]="'prop_' + index"
+                         (load)="playerLoaded($event, player)"
+                         [src]="player.source"
+                         cdkDragBoundary=".field-area"
+                         cdkDrag
+                         (cdkDragMoved)="log($event)">
                 </div>
         </div>
     </div>

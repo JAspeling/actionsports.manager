@@ -10,6 +10,7 @@
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "declaration": false,
+        "noImplicitAny": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "strictPropertyInitialization": false,
@@ -26,6 +27,6 @@
         "enableI18nLegacyMessageIdFormat": false,
         "strictInjectionParameters": false,
         "strictInputAccessModifiers": false,
-        "strictTemplates": true
+        "strictTemplates": true,
     }
 }
