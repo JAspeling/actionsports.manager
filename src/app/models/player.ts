@@ -7,4 +7,5 @@ export class Player extends Prop {
         super(init);
         Object.assign(this, init);
     }
+
 }
