@@ -12,6 +12,7 @@
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
         "moduleResolution": "node",
         "importHelpers": true,
         "target": "es2017",
@@ -23,8 +24,8 @@
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true,
+        "strictInjectionParameters": false,
+        "strictInputAccessModifiers": false,
         "strictTemplates": true
     }
 }
