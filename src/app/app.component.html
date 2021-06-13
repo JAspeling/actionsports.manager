@@ -1,13 +1,11 @@
 <div class="container">
 
     <div class="field-area">
-        <img #field class="field" src="assets/images/field.png">
+        <img #field class="field" src="assets/svg/field.svg">
         <div class="row position-absolute">
-            <ng-container *ngFor="let player of players">
-                <div class="col">
-                    <img class="player" [src]="player" cdkDragBoundary=".field-area" cdkDrag>
+                <div *ngFor="let player of players" class="col">
+                    <img class="player" [src]="player.source" cdkDragBoundary=".field-area" cdkDrag>
                 </div>
-            </ng-container>
         </div>
     </div>
 </div>

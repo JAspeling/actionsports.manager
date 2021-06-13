@@ -1,4 +1,6 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Player } from "./models/player";
+import { Props } from "./models/prop";
 
 @Component({
     selector: 'app-root',
@@ -6,17 +8,19 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnInit, QueryList, View
 })
 export class AppComponent implements OnInit, AfterContentInit {
 
-    players: string[] = [
-        'assets/images/keeper.png',
-        'assets/images/batsman1.png',
-        'assets/images/batsman2.png',
-        'assets/images/bowler.png',
-        'assets/images/cover.png',
-        'assets/images/legside.png',
-        'assets/images/point.png',
-        'assets/images/receiver.png',
-        'assets/images/sweeper_left.png',
-        'assets/images/sweeper_right.png',
+    players: Props = [
+        new Player({ source: 'assets/svg/receiver.svg' }),
+        new Player({ source: 'assets/svg/sweeper_left.svg' }),
+        new Player({ source: 'assets/svg/sweeper_right.svg' }),
+        new Player({ source: 'assets/svg/cover.svg' }),
+        new Player({ source: 'assets/svg/legside.svg' }),
+        new Player({ source: 'assets/svg/point.svg' }),
+        new Player({ source: 'assets/svg/keeper.svg' }),
+        new Player({ source: 'assets/svg/bowler.svg' }),
+        new Player({ source: 'assets/svg/batsman1.svg' }),
+        new Player({ source: 'assets/svg/batsman2.svg' }),
+        // new Prop({source: 'assets/images/keeper.png'}),
+        // new Prop({source: 'assets/images/keeper.png'}),
     ]
 
     constructor(private readonly cdr: ChangeDetectorRef) {
