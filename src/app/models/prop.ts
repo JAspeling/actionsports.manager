@@ -9,11 +9,15 @@ export class Prop {
     height: number;
     width: number;
 
+    draggable: boolean = true;
+
     // initial positions, percentage-based from the field ratio
     initial: {
         x: number,
         y: number;
     } = { x: 0, y: 0 }
+
+    headPos: { x: number, y: number } = { x: 0, y: 0 };
 
     x: number;
     y: number;
