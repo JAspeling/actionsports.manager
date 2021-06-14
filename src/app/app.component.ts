@@ -26,7 +26,7 @@ export class AppComponent {
         'assets/images/players/ben.png',
         'assets/images/players/foley.png',
         'assets/images/players/gerhard.png',
-        'assets/images/players/henrico.png',
+        'assets/images/players/ethan.png',
         'assets/images/players/kyle.png',
         'assets/images/players/marco.png',
         'assets/images/players/nel.png',
