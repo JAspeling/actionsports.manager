@@ -8,8 +8,9 @@ import { ApplicationStateService } from "./services/application-state.service";
 export class AppComponent {
     isMobile: boolean = false;
 
-    constructor(private readonly cdr: ChangeDetectorRef, private readonly appState: ApplicationStateService) {
+    constructor(private readonly appState: ApplicationStateService) {
         appState.isMobileView$.subscribe((isMobile) => {
+            console.log('Is Mobile', isMobile);
             this.isMobile = isMobile
         });
     }

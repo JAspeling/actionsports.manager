@@ -17,6 +17,8 @@ export class ApplicationStateService {
         window.addEventListener('resize', (event) => {
             this.checkSize();
         })
+
+        this.checkSize();
     }
 
     public isMobileView(): boolean {
