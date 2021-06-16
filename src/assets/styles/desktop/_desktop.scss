@@ -72,7 +72,38 @@
         }
     }
 
+    .field {
+        &-layout {
+            display: flex;
+            justify-content: center;
 
+            margin-bottom: 3rem;
+
+            img {
+                &.field {
+                    border-radius: 10px;
+                    max-height: 100vh;
+                }
+            }
+
+            .player {
+                //max-height: 100px;
+                position: absolute;
+                z-index: 1;
+
+                &:not(.noDrag) {
+                    img.svg {
+                        transition: transform .3s;
+
+                        &:hover {
+                            transform: scale(1.05);
+                            fill: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Cant be in the desktop class because dragging it creates an element at the bottom of the body.

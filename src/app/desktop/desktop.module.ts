@@ -5,6 +5,7 @@ import { DesktopPredefinedPositioningComponent } from './desktop-predefined-posi
 import { DesktopComponent } from "./desktop.component";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -20,7 +21,9 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
         CommonModule,
 
         TabsModule,
-        DragDropModule
+        DragDropModule,
+
+        SharedModule,
     ]
 })
 export class DesktopModule {
