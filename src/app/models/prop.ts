@@ -10,6 +10,7 @@ export class Prop {
     width: number;
 
     draggable: boolean = true;
+    droppable: boolean = true;
 
     // initial positions, percentage-based from the field ratio
     initial: {

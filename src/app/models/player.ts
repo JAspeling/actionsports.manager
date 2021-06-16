@@ -6,6 +6,9 @@ export class Player extends Prop {
     assignedSrc: string | null;
     assigned: boolean = false;
 
+    assignHeight: number;
+    assignWidth: number;
+
     constructor(init?: Partial<Player>) {
         super(init);
         Object.assign(this, init);

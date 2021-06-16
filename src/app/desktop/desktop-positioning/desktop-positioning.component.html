@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 id="players">Players</h1>
+    <hr/>
+
+    <div class="row px-2"
+         cdkDropList
+         cdkDropListSortingDisabled
+         [cdkDropListAutoScrollStep]="500">
+        <div *ngFor="let info of players"
+             class="col-4 desktop-player-info"
+             cdkDrag
+             (cdkDragStarted)="scrollToField($event)"
+             [cdkDragData]="info"
+             (cdkDragDropped)="assignPlayer($event)">
+            <img [src]="info.imageSrc" cdkDragHandle/>
+            <div class="info">
+                <h3 class="mb-1">{{info.name}}</h3>
+                <span class="muted upper">{{info.rightHanded ? 'Right handed' : 'Left handed'}}</span>
+                <div class="styles">
+                    <span *ngFor="let style of info.bowlingStyles"
+                          class="muted upper light bowling-style">{{style}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Field layout</h1>
+    <hr/>
+
+    <app-field #fieldComponent [actions]="actions"></app-field>
+</div>
