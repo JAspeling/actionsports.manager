@@ -4,6 +4,9 @@ import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
 import { Player } from "../../models/player";
 import { FieldComponent } from "../../shared/field/field.component";
 import { Action, Actions } from "../../models/action";
+import { saveAs } from 'file-saver';
+
+import * as html2canvas from 'html2canvas/dist/html2canvas.js';
 
 @Component({
     selector: 'app-desktop-positioning',
@@ -71,10 +74,34 @@ export class DesktopPositioningComponent implements OnInit {
             callback: (data) => {
                 this.scrollToPlayers(data)
             }, icon: 'arrow_upward'
+        }),
+        new Action({
+            callback: (data) => {
+                void this.takeScreenshot(data)
+            },
+            icon: 'download'
         })
     ]
 
     constructor() {
+    }
+
+    downloadBase64Data(base64String, fileName) {
+        let file = this.convertBase64ToFile(base64String, fileName);
+        saveAs(file, fileName);
+    }
+
+    convertBase64ToFile(base64String, fileName) {
+        let arr = base64String.split(',');
+        let mime = arr[0].match(/:(.*?);/)[1];
+        let bstr = atob(arr[1]);
+        let n = bstr.length;
+        let uint8Array = new Uint8Array(n);
+        while (n--) {
+            uint8Array[n] = bstr.charCodeAt(n);
+        }
+        let file = new File([ uint8Array ], fileName, { type: mime });
+        return file;
     }
 
     ngOnInit(): void {
@@ -94,7 +121,27 @@ export class DesktopPositioningComponent implements OnInit {
         if (player && player.droppable) {
             player.assigned = true;
             player.assignedSrc = data.imageSrc;
+
+            this.fieldComponent.determineAssignedRatio(player);
         }
+    }
+
+    private async takeScreenshot(data: any): Promise<void> {
+        const element: HTMLDivElement = document.getElementById('field-area') as HTMLDivElement;
+
+        await this.scrollToTop();
+        const canvas = await html2canvas(element)
+        const base64 = canvas.toDataURL();
+        this.downloadBase64Data(base64, 'Test.png');
+    }
+
+    private scrollToTop(): Promise<void> {
+        return new Promise((resolve) => {
+            window.scrollTo({ top: 0 });
+            setTimeout(() => {
+                resolve();
+            }, 500)
+        })
     }
 
     private scrollToPlayers(data: any): void {

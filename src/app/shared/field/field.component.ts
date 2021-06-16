@@ -15,7 +15,12 @@ export class FieldComponent implements OnInit {
     @ViewChild('field') field: ElementRef<HTMLImageElement>;
     fieldDimensions: { x: number, y: number, height: number, width: number } = { x: 0, y: 0, height: 0, width: 0 };
 
+
     constructor() {
+    }
+
+    get fieldRect(): DOMRect {
+        return this.field.nativeElement.getBoundingClientRect();
     }
 
     ngOnInit(): void {
@@ -27,6 +32,16 @@ export class FieldComponent implements OnInit {
 
         // TODO: Still a bug here where the players dont resize correctly
         this.props.forEach(player => this.setInitialPosition(player));
+    }
+
+    assignedToLeft(prop: Prop): string {
+        const player = prop as Player;
+        return `calc(${player.headPos.x}% - ${player.width}px`;
+    }
+
+    assignedToTop(prop: Prop): string {
+        const player = prop as Player;
+        return `calc(${player.headPos.y}% - ${player.height}px)`;
     }
 
     public unassign(prop: Prop): void {
@@ -110,10 +125,11 @@ export class FieldComponent implements OnInit {
         ]
     }
 
-    public dragMove(event, prop: Prop): void {
+    public draggingPlayer(event, prop: Prop): void {
         const target = event.source.element.nativeElement as HTMLImageElement;
 
         this.determineRatioHeight(prop);
+        // this.determineAssignedRatio(prop);
         this.determineZIndex(prop);
     }
 
@@ -133,6 +149,15 @@ export class FieldComponent implements OnInit {
         this.setInitialPosition(player);
     }
 
+    public determineAssignedRatio(prop: Prop): void {
+        const player = prop as Player;
+        const val = Math.round(this.fieldRect.height * 0.05);
+
+        requestAnimationFrame(() => {
+            player.assignHeight = player.assignWidth = val;
+        })
+    }
+
     private setInitialPosition(player: Prop): void {
         player.getInitialHeight(this.fieldDimensions.height)
         setTimeout(() => {
@@ -144,12 +169,11 @@ export class FieldComponent implements OnInit {
     }
 
     private determineRatioHeight(prop: Prop): void {
-        const fieldRect = this.field.nativeElement.getBoundingClientRect();
+
         const rect = prop.element.getBoundingClientRect();
 
-        // const fieldRect = this.field.nativeElement.getBoundingClientRect();
-        // console.log(Math.round((rect.x - fieldRect.x) / this.fieldDimensions.width * 100),
-        //     Math.round((rect.y - fieldRect.y) / this.fieldDimensions.height * 100))
+        // console.log(Math.round((rect.x - this.fieldRect.x) / this.fieldDimensions.width * 100),
+        //     Math.round((rect.y - this.fieldRect.y) / this.fieldDimensions.height * 100))
 
         // No need to calculate this on dragMode, can be on the field init.
         const upperBounds = 0.83 * this.fieldDimensions.height;
@@ -160,7 +184,7 @@ export class FieldComponent implements OnInit {
         const _middle = _upper / 2;
 
         // Might have to use the height here instead of the bottom.
-        const bottom = rect.bottom - fieldRect.top;
+        const bottom = rect.bottom - this.fieldRect.top;
 
         if (bottom >= lowerBounds && bottom <= upperBounds) {
             let topRange: number = 0;

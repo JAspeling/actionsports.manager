@@ -1,6 +1,6 @@
 <div class="field-layout">
 
-    <div class="field-area">
+    <div class="field-area" id="field-area">
         <img #field id="field" class="field" src="assets/images/field.svg" alt="field" (load)="fieldLoaded($event)">
 
         <div class="actions">
@@ -15,16 +15,17 @@
              cdkDragBoundary=".field-area"
              [cdkDragDisabled]="!prop.draggable"
              cdkDrag
-             (cdkDragMoved)="dragMove($event, prop)"
+             (cdkDragMoved)="draggingPlayer($event, prop)"
              [class.noDrag]="!prop.draggable"
              [style.left.px]="prop.x"
              [style.top.px]="prop.y">
             <img class="assigned-player" *ngIf="prop['assigned']"
-                 width="30"
-                 height="30"
+                 #player
+                 [width]="prop['assignWidth']"
+                 [height]="prop['assignHeight']"
                  (dblclick)="unassign(prop)"
-                 [style.left]="'calc(' + prop['headPos'].x + '% - 15px)'"
-                 [style.top]="'calc(' + prop['headPos'].y + '% - 15px)'"
+                 [style.left]="assignedToLeft(prop)"
+                 [style.top]="assignedToTop(prop)"
                  [src]="prop['assignedSrc']">
             <img class="svg"
                  [height]="prop.actualHeight"
