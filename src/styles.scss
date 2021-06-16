@@ -6,9 +6,14 @@ html, body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    background-color: #EEEEEE;
 }
 
+@import "assets/styles/typography";
+
+@import "assets/styles/desktop/desktop";
+@import "assets/styles/mobile/mobile";
 
 .field {
     &-area {

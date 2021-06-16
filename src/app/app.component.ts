@@ -10,12 +10,16 @@ import {
 import { Player, Players } from "./models/player";
 import { Prop, Props } from "./models/prop";
 import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { ApplicationStateService } from "./services/application-state.service";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
 export class AppComponent {
+
+    isMobile: boolean = false;
+
 
     @ViewChild('field') field: ElementRef<HTMLImageElement>;
     fieldDimensions: { x: number, y: number, height: number, width: number } = { x: 0, y: 0, height: 0, width: 0 };
@@ -34,15 +38,18 @@ export class AppComponent {
         'assets/images/players/rudi.png',
     ];
 
-    constructor(private readonly cdr: ChangeDetectorRef) {
+    constructor(private readonly cdr: ChangeDetectorRef, private readonly appState: ApplicationStateService) {
+        appState.isMobileView$.subscribe((isMobile) => {
+            this.isMobile = isMobile
+        });
     }
 
     @HostListener('window:resize', [ '$event' ])
     onResize(event): void {
-        this.setFieldDimensions(this.field.nativeElement);
-
-        // TODO: Still a bug here where the players dont resize correctly
-        this.props.forEach(player => this.setInitialPosition(player));
+        // this.setFieldDimensions(this.field.nativeElement);
+        //
+        // // TODO: Still a bug here where the players dont resize correctly
+        // this.props.forEach(player => this.setInitialPosition(player));
     }
 
     dragMove(event, prop: Prop): void {
@@ -59,18 +66,68 @@ export class AppComponent {
 
         // initialize the players, now that we know the size of the field.
         this.props = [
-            new Player({ source: 'assets/svg/receiver.svg', baseHeight: 276, initial: { x: 38, y: 20 }, headPos: {x: 69.74, y: 7.42} }),
-            new Player({ source: 'assets/svg/sweeper_left.svg', baseHeight: 276, initial: { x: 61, y: 26 }, headPos: {x: 26.04, y: 8.12} }),
-            new Player({ source: 'assets/svg/sweeper_right.svg', baseHeight: 306, initial: { x: 34, y: 29 }, headPos: {x: 42.15, y: 9.06} }),
-            new Player({ source: 'assets/svg/cover.svg', baseHeight: 216, initial: { x: 65, y: 46 }, headPos: {x: 44.92, y: 9.24} }),
-            new Player({ source: 'assets/svg/legside.svg', baseHeight: 200, initial: { x: 21, y: 57 }, headPos: {x: 66.07, y: 7.23} }),
-            new Player({ source: 'assets/svg/point.svg', baseHeight: 211, initial: { x: 68, y: 61 }, headPos: {x: 29.30, y: 8.77} }),
-            new Player({ source: 'assets/svg/keeper.svg', baseHeight: 221, initial: { x: 50, y: 68 }, headPos: {x: 60.72, y: 6.68} }),
-            new Player({ source: 'assets/svg/bowler.svg', baseHeight: 395, initial: { x: 51, y: 20 }, headPos: {x: 80.71, y: 34.71} }),
-            new Player({ source: 'assets/svg/batsman1.svg', baseHeight: 304, initial: { x: 44, y: 57 }, headPos: {x: 49.08, y: 4.75} }),
-            new Player({ source: 'assets/svg/batsman2.svg', baseHeight: 304, initial: { x: 28, y: 39 }, headPos: {x: 33.44, y: 3.66} }),
-            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 47, y: 68 }, draggable: false}),
-            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 49, y: 28 }, draggable: false}),
+            new Player({
+                source: 'assets/svg/receiver.svg',
+                baseHeight: 276,
+                initial: { x: 38, y: 20 },
+                headPos: { x: 69.74, y: 7.42 }
+            }),
+            new Player({
+                source: 'assets/svg/sweeper_left.svg',
+                baseHeight: 276,
+                initial: { x: 61, y: 26 },
+                headPos: { x: 26.04, y: 8.12 }
+            }),
+            new Player({
+                source: 'assets/svg/sweeper_right.svg',
+                baseHeight: 306,
+                initial: { x: 34, y: 29 },
+                headPos: { x: 42.15, y: 9.06 }
+            }),
+            new Player({
+                source: 'assets/svg/cover.svg',
+                baseHeight: 216,
+                initial: { x: 65, y: 46 },
+                headPos: { x: 44.92, y: 9.24 }
+            }),
+            new Player({
+                source: 'assets/svg/legside.svg',
+                baseHeight: 200,
+                initial: { x: 21, y: 57 },
+                headPos: { x: 66.07, y: 7.23 }
+            }),
+            new Player({
+                source: 'assets/svg/point.svg',
+                baseHeight: 211,
+                initial: { x: 68, y: 61 },
+                headPos: { x: 29.30, y: 8.77 }
+            }),
+            new Player({
+                source: 'assets/svg/keeper.svg',
+                baseHeight: 221,
+                initial: { x: 50, y: 68 },
+                headPos: { x: 60.72, y: 6.68 }
+            }),
+            new Player({
+                source: 'assets/svg/bowler.svg',
+                baseHeight: 395,
+                initial: { x: 51, y: 20 },
+                headPos: { x: 80.71, y: 34.71 }
+            }),
+            new Player({
+                source: 'assets/svg/batsman1.svg',
+                baseHeight: 304,
+                initial: { x: 44, y: 57 },
+                headPos: { x: 49.08, y: 4.75 }
+            }),
+            new Player({
+                source: 'assets/svg/batsman2.svg',
+                baseHeight: 304,
+                initial: { x: 28, y: 39 },
+                headPos: { x: 33.44, y: 3.66 }
+            }),
+            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 47, y: 68 }, draggable: false }),
+            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 49, y: 28 }, draggable: false }),
         ]
     }
 
@@ -90,6 +147,22 @@ export class AppComponent {
             console.log(element);
             console.log(player);
         }
+    }
+
+    playerClicked(event: MouseEvent) {
+        console.log(event.target, event.x, event.y);
+        const rect = (event.target as HTMLElement).getBoundingClientRect()
+        var x = event.pageX - rect.x;
+        var y = event.pageY - rect.y;
+
+        console.log(x, y);
+        console.log(x / rect.width, y / rect.height);
+    }
+
+    unassign(prop: Prop) {
+        const player = prop as Player;
+        player.assigned = false;
+        player.assignedSrc = null;
     }
 
     private setFieldDimensions(img: HTMLImageElement) {
@@ -146,33 +219,17 @@ export class AppComponent {
         })
     }
 
-    playerClicked(event: MouseEvent) {
-        console.log(event.target, event.x, event.y);
-        const rect = (event.target as HTMLElement).getBoundingClientRect()
-        var x = event.pageX - rect.x;
-        var y = event.pageY - rect.y;
-
-        console.log(x, y);
-        console.log(x / rect.width, y / rect.height);
-    }
-
-    unassign(prop: Prop) {
-        const player = prop as Player;
-        player.assigned = false;
-        player.assignedSrc = null;
-    }
-
     private determineZIndex(prop: Prop) {
         this.props.sort((p1, p2) => {
             const p1Rect = p1.element.getBoundingClientRect();
             const p2Rect = p2.element.getBoundingClientRect();
-           if (p1Rect.bottom < p2Rect.bottom) {
-               return -1;
-           }  else if (p1Rect.bottom > p2Rect.bottom) {
-               return 1
-           } else {
-               return 0
-           }
+            if (p1Rect.bottom < p2Rect.bottom) {
+                return -1;
+            } else if (p1Rect.bottom > p2Rect.bottom) {
+                return 1
+            } else {
+                return 0
+            }
         }).forEach((p, index) => p.zIndex = index + 1);
     }
 }
