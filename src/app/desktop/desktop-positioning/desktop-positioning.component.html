@@ -1,9 +1,17 @@
 <div class="container">
-    <h1>Players</h1>
+    <h1 id="players">Players</h1>
     <hr/>
 
-    <div class="row px-2" cdkDropList cdkDropListSortingDisabled [cdkDropListAutoScrollStep]="500">
-        <div *ngFor="let info of players" class="col-4 desktop-player-info" cdkDrag >
+    <div class="row px-2"
+         cdkDropList
+         cdkDropListSortingDisabled
+         [cdkDropListAutoScrollStep]="500">
+        <div *ngFor="let info of players"
+             class="col-4 desktop-player-info"
+             cdkDrag
+             (cdkDragStarted)="scrollToField($event)"
+             [cdkDragData]="info"
+             (cdkDragDropped)="assignPlayer($event)">
             <img [src]="info.imageSrc" cdkDragHandle/>
             <div class="info">
                 <h3 class="mb-1">{{info.name}}</h3>
@@ -19,68 +27,5 @@
     <h1>Field layout</h1>
     <hr/>
 
-    <app-field></app-field>
+    <app-field #fieldComponent [actions]="actions"></app-field>
 </div>
-
-<!--<div class=" container">-->
-
-        <!--    <div class="row">-->
-        <!--        <div class="col-2 players" cdkDropList>-->
-        <!--            <img *ngFor="let player of names"-->
-        <!--                 class="player-tag"-->
-        <!--                 [src]="player"-->
-        <!--                 height="50"-->
-        <!--                 width="50"-->
-        <!--                 cdkDrag-->
-        <!--                 [cdkDragData]="player"-->
-        <!--                 (cdkDragDropped)="assignPlayer($event)"-->
-        <!--            >-->
-        <!--        </div>-->
-        <!--        <div class="col-10 field-area">-->
-        <!--            <img #field class="field-image" (load)="fieldLoaded($event)" src="assets/svg/field.svg">-->
-        <!--            <div *ngFor="let prop of props; let index = index" class="player"-->
-        <!--                 cdkDragBoundary=".field-area"-->
-        <!--                 [cdkDragDisabled]="!prop.draggable"-->
-        <!--                 cdkDrag-->
-        <!--                 (cdkDragMoved)="dragMove($event, prop)"-->
-        <!--                 [class.noDrag]="!prop.draggable"-->
-        <!--                 [style.left.px]="prop.x"-->
-        <!--                 [style.top.px]="prop.y">-->
-        <!--                <img class="assigned-player" *ngIf="prop['assigned']"-->
-        <!--                     width="30"-->
-        <!--                     height="30"-->
-        <!--                     (dblclick)="unassign(prop)"-->
-        <!--                     [style.left]="'calc(' + prop['headPos'].x + '% - 15px)'"-->
-        <!--                     [style.top]="'calc(' + prop['headPos'].y + '% - 15px)'"-->
-        <!--                     [src]="prop['assignedSrc']">-->
-        <!--                <img class="svg"-->
-        <!--                     [height]="prop.actualHeight"-->
-        <!--                     [id]="'prop_' + index"-->
-        <!--                     [src]="prop.source"-->
-        <!--                     (click)="playerClicked($event)"-->
-        <!--                     (load)="playerLoaded($event, prop)">-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-
-        <!--    &lt;!&ndash;    <div class="field-area" [style.width.px]="field.width">&ndash;&gt;-->
-        <!--    &lt;!&ndash;        <div class="players">&ndash;&gt;-->
-        <!--    &lt;!&ndash;            &ndash;&gt;-->
-        <!--    &lt;!&ndash;        </div>&ndash;&gt;-->
-
-        <!--    &lt;!&ndash;        <div class="field">&ndash;&gt;-->
-        <!--    &lt;!&ndash;            <img #field class="field-image" (load)="fieldLoaded($event)" src="assets/svg/field.svg">&ndash;&gt;-->
-        <!--    &lt;!&ndash;            <div *ngFor="let prop of props; let index = index" class="player"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                 cdkDragBoundary=".field-area"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                 cdkDrag&ndash;&gt;-->
-        <!--    &lt;!&ndash;                 (cdkDragMoved)="dragMove($event, prop)"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                 [style.left.px]="prop.x"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                 [style.top.px]="prop.y">&ndash;&gt;-->
-        <!--    &lt;!&ndash;                <img [height]="prop.actualHeight"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                    [id]="'prop_' + index"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                    [src]="prop.source"&ndash;&gt;-->
-        <!--    &lt;!&ndash;                    (load)="playerLoaded($event, prop)">&ndash;&gt;-->
-        <!--    &lt;!&ndash;            </div>&ndash;&gt;-->
-        <!--    &lt;!&ndash;        </div>&ndash;&gt;-->
-        <!--    &lt;!&ndash;    </div>&ndash;&gt;-->
-        <!--</div>-->

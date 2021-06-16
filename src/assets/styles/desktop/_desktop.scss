@@ -15,6 +15,8 @@
         &-info {
 
             &.cdk-drag-preview {
+                opacity: .5;
+
                 .info {
                     display: none;
                 }
@@ -79,25 +81,50 @@
 
             margin-bottom: 3rem;
 
-            img {
-                &.field {
-                    border-radius: 10px;
-                    max-height: 100vh;
+            .field-area {
+                .actions {
+                    margin-top: 10px;
+                    margin-right: 10px;
+
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+
+                    .action {
+                        border-radius: 50%;
+                        height: 50px;
+                        width: 50px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+
+                        &:not(last) {
+                            margin-right: 10px;
+                        }
+                    }
                 }
-            }
 
-            .player {
-                //max-height: 100px;
-                position: absolute;
-                z-index: 1;
+                img {
+                    &.field {
+                        border-radius: 10px;
+                        max-height: 100vh;
+                    }
+                }
 
-                &:not(.noDrag) {
-                    img.svg {
-                        transition: transform .3s;
+                .player {
+                    //max-height: 100px;
+                    position: absolute;
+                    z-index: 1;
 
-                        &:hover {
-                            transform: scale(1.05);
-                            fill: red;
+                    &:not(.noDrag) {
+                        img.svg {
+                            transition: transform .3s;
+
+                            &:hover {
+                                transform: scale(1.05);
+                                fill: red;
+                            }
                         }
                     }
                 }

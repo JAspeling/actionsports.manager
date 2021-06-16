@@ -1,26 +1,37 @@
 <div class="field-layout">
-    <img #field class="field" src="assets/images/field.svg" alt="field" (load)="fieldLoaded($event)">
 
-    <div *ngFor="let prop of props; let index = index" class="player"
-         cdkDragBoundary=".field-layout"
-         [cdkDragDisabled]="!prop.draggable"
-         cdkDrag
-         (cdkDragMoved)="dragMove($event, prop)"
-         [class.noDrag]="!prop.draggable"
-         [style.left.px]="prop.x"
-         [style.top.px]="prop.y">
-        <img class="assigned-player" *ngIf="prop['assigned']"
-             width="30"
-             height="30"
-             (dblclick)="unassign(prop)"
-             [style.left]="'calc(' + prop['headPos'].x + '% - 15px)'"
-             [style.top]="'calc(' + prop['headPos'].y + '% - 15px)'"
-             [src]="prop['assignedSrc']">
-        <img class="svg"
-             [height]="prop.actualHeight"
-             [id]="'prop_' + index"
-             [src]="prop.source"
-             (click)="playerClicked($event)"
-             (load)="playerLoaded($event, prop)">
+    <div class="field-area">
+        <img #field id="field" class="field" src="assets/images/field.svg" alt="field" (load)="fieldLoaded($event)">
+
+        <div class="actions">
+            <button  *ngFor="let action of actions"
+                     class="btn btn-light action"
+                     (click)="action.callback($event)">
+                <span class="material-icons">{{action.icon}}</span>
+            </button>
+        </div>
+
+        <div *ngFor="let prop of props; let index = index" class="player"
+             cdkDragBoundary=".field-area"
+             [cdkDragDisabled]="!prop.draggable"
+             cdkDrag
+             (cdkDragMoved)="dragMove($event, prop)"
+             [class.noDrag]="!prop.draggable"
+             [style.left.px]="prop.x"
+             [style.top.px]="prop.y">
+            <img class="assigned-player" *ngIf="prop['assigned']"
+                 width="30"
+                 height="30"
+                 (dblclick)="unassign(prop)"
+                 [style.left]="'calc(' + prop['headPos'].x + '% - 15px)'"
+                 [style.top]="'calc(' + prop['headPos'].y + '% - 15px)'"
+                 [src]="prop['assignedSrc']">
+            <img class="svg"
+                 [height]="prop.actualHeight"
+                 [id]="'prop_' + index"
+                 [src]="prop.source"
+                 (click)="playerClicked($event)"
+                 (load)="playerLoaded($event, prop)">
+        </div>
     </div>
 </div>

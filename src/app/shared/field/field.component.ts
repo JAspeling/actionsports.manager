@@ -1,14 +1,16 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Prop, Props } from "../../models/prop";
 import { Player } from "../../models/player";
-import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { Action, Actions } from "../../models/action";
 
 @Component({
     selector: 'app-field',
     templateUrl: './field.component.html'
 })
 export class FieldComponent implements OnInit {
-    props: Props = [];
+    @Input() actions: Actions = [];
+
+    public props: Props = [];
 
     @ViewChild('field') field: ElementRef<HTMLImageElement>;
     fieldDimensions: { x: number, y: number, height: number, width: number } = { x: 0, y: 0, height: 0, width: 0 };
@@ -33,17 +35,6 @@ export class FieldComponent implements OnInit {
         player.assignedSrc = null;
     }
 
-    public assignPlayer(event: CdkDragDrop<any>): void {
-        const element = document.elementFromPoint(event.dropPoint.x, event.dropPoint.y);
-        const player: Player = this.props.find(p => p.element === element) as Player;
-
-        if (player) {
-            player.assigned = true;
-            player.assignedSrc = event.item.data;
-            console.log(element);
-            console.log(player);
-        }
-    }
 
     public fieldLoaded(event: Event): void {
         const img = event.composedPath()[0] as HTMLImageElement;
@@ -104,13 +95,15 @@ export class FieldComponent implements OnInit {
                 source: 'assets/svg/batsman1.svg',
                 baseHeight: 304,
                 initial: { x: 44, y: 57 },
-                headPos: { x: 49.08, y: 4.75 }
+                headPos: { x: 49.08, y: 4.75 },
+                droppable: false
             }),
             new Player({
                 source: 'assets/svg/batsman2.svg',
                 baseHeight: 304,
                 initial: { x: 28, y: 39 },
-                headPos: { x: 33.44, y: 3.66 }
+                headPos: { x: 33.44, y: 3.66 },
+                droppable: false
             }),
             new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 47, y: 68 }, draggable: false }),
             new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 49, y: 28 }, draggable: false }),
@@ -134,7 +127,7 @@ export class FieldComponent implements OnInit {
         console.log(x / rect.width, y / rect.height);
     }
 
-    playerLoaded(event: Event, player: Prop): void {
+    public playerLoaded(event: Event, player: Prop): void {
         player.actualHeight = player.getInitialHeight(this.fieldDimensions.height);
         player.element = event.target as HTMLImageElement;
         this.setInitialPosition(player);
@@ -167,7 +160,7 @@ export class FieldComponent implements OnInit {
         const _middle = _upper / 2;
 
         // Might have to use the height here instead of the bottom.
-        const bottom = rect.bottom -fieldRect.top;
+        const bottom = rect.bottom - fieldRect.top;
 
         if (bottom >= lowerBounds && bottom <= upperBounds) {
             let topRange: number = 0;
