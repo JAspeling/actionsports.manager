@@ -1,26 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Team Manager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Team manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Team stats</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">ActionSports profile</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
 <div class="container">
-    <span>Mobile version</span>
+
+
+    <div class="players-container">
+        <div *ngFor="let player of players" class="player">
+            <img [src]="player.imageSrc" [alt]="player.name">
+            <div class="info">
+                <h2 class="header">{{player.name}}</h2>
+                <div class="meta">
+                    <span>{{player.rightHanded ? 'right handed' : 'left handed'}}</span>
+                    <span *ngFor="let style of player.bowlingStyles">{{style}}</span>
+                </div>
+            </div>
+            <div class="actions">
+                <button mat-button [matMenuTriggerFor]="menu" class="material-icons">more_vert</button>
+
+                <mat-menu xPosition="before" yPosition="above" #menu="matMenu">
+                    <div *ngFor="let position of positions"
+                            class="positions"
+                            (click)="assignPlayer(player, position)">
+                        <img [src]="position.imageSrc" [alt]="position.name">
+                        <span class="info">{{position.name}}</span>
+                    </div>
+                </mat-menu>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="field">
+        <hr>
+        <h1>Field positioning</h1>
+
+        <app-field #fieldComponent></app-field>
+    </div>
 </div>
+
+<ng-template #popTemplate>
+
+</ng-template>

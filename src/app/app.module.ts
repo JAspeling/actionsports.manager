@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { DesktopModule } from "./desktop/desktop.module";
 import { MobileModule } from "./mobile/mobile.module";
+import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { MobileModule } from "./mobile/mobile.module";
         AppRoutingModule,
         BrowserAnimationsModule,
         DragDropModule,
+        BsDropdownModule.forRoot(),
 
         DesktopModule,
         MobileModule

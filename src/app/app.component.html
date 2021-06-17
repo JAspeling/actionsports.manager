@@ -1,7 +1,7 @@
 <ng-container *ngIf="isMobile; else desktop">
-    <app-mobile></app-mobile>
+    <app-mobile [players]="players"></app-mobile>
 </ng-container>
 
 <ng-template #desktop>
-    <app-desktop></app-desktop>
+    <app-desktop [players]="players"></app-desktop>
 </ng-template>

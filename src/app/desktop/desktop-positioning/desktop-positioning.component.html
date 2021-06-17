@@ -6,7 +6,7 @@
          cdkDropList
          cdkDropListSortingDisabled
          [cdkDropListAutoScrollStep]="500">
-        <div *ngFor="let info of players"
+        <div *ngFor="let info of playerInfo"
              class="col-4 desktop-player-info"
              cdkDrag
              (cdkDragStarted)="scrollToField($event)"
