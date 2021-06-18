@@ -1,7 +1,10 @@
+import { PropType } from "./PropType";
+
 export type Props = Prop[];
 
 export class Prop {
     source: string;
+    propType: PropType;
     element: HTMLImageElement;
 
     // Original 'height' to use as a resize basis

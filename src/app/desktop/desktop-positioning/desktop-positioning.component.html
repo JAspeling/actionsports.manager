@@ -15,10 +15,10 @@
             <img [src]="info.imageSrc" cdkDragHandle/>
             <div class="info">
                 <h3 class="mb-1">{{info.name}}</h3>
-                <span class="muted upper">{{info.rightHanded ? 'Right handed' : 'Left handed'}}</span>
+                <span class="muted uppercase">{{info.rightHanded ? 'Right handed' : 'Left handed'}}</span>
                 <div class="styles">
                     <span *ngFor="let style of info.bowlingStyles"
-                          class="muted upper light bowling-style">{{style}}</span>
+                          class="muted uppercase light bowling-style">{{style}}</span>
                 </div>
             </div>
         </div>

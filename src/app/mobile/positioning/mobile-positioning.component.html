@@ -2,22 +2,35 @@
 
 
     <div class="players-container">
-        <div *ngFor="let player of players" class="player">
-            <img [src]="player.imageSrc" [alt]="player.name">
+        <div *ngFor="let playerInfo of players" class="player">
+            <img [src]="playerInfo.imageSrc" [alt]="playerInfo.name">
             <div class="info">
-                <h2 class="header">{{player.name}}</h2>
+                <div>
+                    <h2 class="header d-inline">{{playerInfo.name}}</h2>
+                    <h6 class="px-1 uppercase d-inline" *ngIf="playerInfo.assignedPlayer?.assigned">as <strong>{{playerInfo.assignedPlayer.propType}}</strong></h6>
+                </div>
+
                 <div class="meta">
-                    <span>{{player.rightHanded ? 'right handed' : 'left handed'}}</span>
-                    <span *ngFor="let style of player.bowlingStyles">{{style}}</span>
+                    <span>{{playerInfo.rightHanded ? 'right handed' : 'left handed'}}</span>
+                    <span *ngFor="let style of playerInfo.bowlingStyles">{{style}}</span>
                 </div>
             </div>
             <div class="actions">
                 <button mat-button [matMenuTriggerFor]="menu" class="material-icons">more_vert</button>
 
                 <mat-menu xPosition="before" yPosition="above" #menu="matMenu">
+                    <div *ngIf="playerInfo.assignedPlayer?.assigned"
+                         class="positions positions-remove"
+                         (click)="unAssignPlayer(playerInfo)">
+                        <span class="info">
+                            <span class="icon material-icons">highlight_off</span>
+                            {{playerInfo.assignedPlayer.propType}}
+                        </span>
+                    </div>
                     <div *ngFor="let position of positions"
-                            class="positions"
-                            (click)="assignPlayer(player, position)">
+                         class="positions"
+                         [class.disabled]="position.assigned === true"
+                         (click)="assignPlayer($event, playerInfo, position)">
                         <img [src]="position.imageSrc" [alt]="position.name">
                         <span class="info">{{position.name}}</span>
                     </div>
