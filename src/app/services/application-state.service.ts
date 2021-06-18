@@ -23,7 +23,7 @@ export class ApplicationStateService {
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(userAgent)) {
                 this.isMobileView$.next(true);
             } else {
-                this.isMobileView$.next(true);
+                this.isMobileView$.next(false);
             }
         });
     }
