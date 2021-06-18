@@ -1,7 +1,8 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Prop, Props } from "../../models/prop";
 import { Player } from "../../models/player";
-import { Action, Actions } from "../../models/action";
+import { Actions } from "../../models/action";
+import { PropType } from "../../models/PropType";
 
 @Component({
     selector: 'app-field',
@@ -59,54 +60,63 @@ export class FieldComponent implements OnInit {
         // initialize the players, now that we know the size of the field.
         this.props = [
             new Player({
+                propType: PropType.receiver,
                 source: 'assets/svg/receiver.svg',
                 baseHeight: 276,
                 initial: { x: 38, y: 20 },
                 headPos: { x: 69.74, y: 7.42 }
             }),
             new Player({
+                propType: PropType.sweeper_left,
                 source: 'assets/svg/sweeper_left.svg',
                 baseHeight: 276,
                 initial: { x: 61, y: 26 },
                 headPos: { x: 26.04, y: 8.12 }
             }),
             new Player({
+                propType: PropType.sweeper_right,
                 source: 'assets/svg/sweeper_right.svg',
                 baseHeight: 306,
                 initial: { x: 34, y: 29 },
                 headPos: { x: 42.15, y: 9.06 }
             }),
             new Player({
+                propType: PropType.cover,
                 source: 'assets/svg/cover.svg',
                 baseHeight: 216,
                 initial: { x: 65, y: 46 },
                 headPos: { x: 44.92, y: 9.24 }
             }),
             new Player({
+                propType: PropType.legside,
                 source: 'assets/svg/legside.svg',
                 baseHeight: 200,
                 initial: { x: 21, y: 57 },
                 headPos: { x: 66.07, y: 7.23 }
             }),
             new Player({
+                propType: PropType.point,
                 source: 'assets/svg/point.svg',
                 baseHeight: 211,
                 initial: { x: 68, y: 61 },
                 headPos: { x: 29.30, y: 8.77 }
             }),
             new Player({
+                propType: PropType.keeper,
                 source: 'assets/svg/keeper.svg',
                 baseHeight: 221,
                 initial: { x: 50, y: 68 },
                 headPos: { x: 60.72, y: 6.68 }
             }),
             new Player({
+                propType: PropType.bowler,
                 source: 'assets/svg/bowler.svg',
                 baseHeight: 395,
                 initial: { x: 51, y: 20 },
                 headPos: { x: 80.71, y: 34.71 }
             }),
             new Player({
+                propType: PropType.batsman,
                 source: 'assets/svg/batsman1.svg',
                 baseHeight: 304,
                 initial: { x: 44, y: 57 },
@@ -114,14 +124,15 @@ export class FieldComponent implements OnInit {
                 droppable: false
             }),
             new Player({
+                propType: PropType.batsman,
                 source: 'assets/svg/batsman2.svg',
                 baseHeight: 304,
                 initial: { x: 28, y: 39 },
                 headPos: { x: 33.44, y: 3.66 },
                 droppable: false
             }),
-            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 47, y: 68 }, draggable: false }),
-            new Prop({ source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 49, y: 28 }, draggable: false }),
+            new Prop({ propType: PropType.stumps, source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 47, y: 68 }, draggable: false }),
+            new Prop({ propType: PropType.stumps, source: 'assets/svg/stumps.svg', baseHeight: 150, initial: { x: 49, y: 28 }, draggable: false }),
         ]
     }
 

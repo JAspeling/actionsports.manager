@@ -8,28 +8,23 @@ export class ApplicationStateService {
 
     isMobileView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    // @HostListener('window:resize', [ '$event' ])
-    // onResize(event): void {
-    //     this.checkSize();
-    // }
-
     constructor() {
-        window.addEventListener('resize', (event) => {
-            this.checkSize();
-        })
-
-        this.checkSize();
+        this.confirmUserAgent();
     }
 
     public isMobileView(): boolean {
         return this.isMobileView$.getValue();
     }
 
-    private checkSize(): void {
-        if (window.innerWidth < 768) {
-            this.isMobileView$.next(true);
-        } else {
-            this.isMobileView$.next(false);
-        }
+    private confirmUserAgent() {
+        $(document).ready(() => {
+            const userAgent = navigator.userAgent;
+
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(userAgent)) {
+                this.isMobileView$.next(true);
+            } else {
+                this.isMobileView$.next(false);
+            }
+        });
     }
 }

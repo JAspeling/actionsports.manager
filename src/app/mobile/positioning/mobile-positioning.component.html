@@ -1,26 +1,53 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Team Manager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Team manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Team stats</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">ActionSports profile</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
 <div class="container">
-    <span>Mobile version</span>
+
+
+    <div class="players-container">
+        <div *ngFor="let playerInfo of players" class="player">
+            <img [src]="playerInfo.imageSrc" [alt]="playerInfo.name">
+            <div class="info">
+                <div>
+                    <h2 class="header d-inline">{{playerInfo.name}}</h2>
+                    <h6 class="px-1 uppercase d-inline" *ngIf="playerInfo.assignedPlayer?.assigned">as <strong>{{playerInfo.assignedPlayer.propType}}</strong></h6>
+                </div>
+
+                <div class="meta">
+                    <span>{{playerInfo.rightHanded ? 'right handed' : 'left handed'}}</span>
+                    <span *ngFor="let style of playerInfo.bowlingStyles">{{style}}</span>
+                </div>
+            </div>
+            <div class="actions">
+                <button mat-button [matMenuTriggerFor]="menu" class="material-icons">more_vert</button>
+
+                <mat-menu xPosition="before" yPosition="above" #menu="matMenu">
+                    <div *ngIf="playerInfo.assignedPlayer?.assigned"
+                         class="positions positions-remove"
+                         (click)="unAssignPlayer(playerInfo)">
+                        <span class="info">
+                            <span class="icon material-icons">highlight_off</span>
+                            {{playerInfo.assignedPlayer.propType}}
+                        </span>
+                    </div>
+                    <div *ngFor="let position of positions"
+                         class="positions"
+                         [class.disabled]="position.assigned === true"
+                         (click)="assignPlayer($event, playerInfo, position)">
+                        <img [src]="position.imageSrc" [alt]="position.name">
+                        <span class="info">{{position.name}}</span>
+                    </div>
+                </mat-menu>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="field">
+        <hr>
+        <h1>Field positioning</h1>
+
+        <app-field #fieldComponent></app-field>
+    </div>
 </div>
+
+<ng-template #popTemplate>
+
+</ng-template>

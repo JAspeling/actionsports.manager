@@ -73,64 +73,6 @@
             }
         }
     }
-
-    .field {
-        &-layout {
-            display: flex;
-            justify-content: center;
-
-            margin-bottom: 3rem;
-
-            .field-area {
-                .actions {
-                    margin-top: 10px;
-                    margin-right: 10px;
-
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-
-                    .action {
-                        border-radius: 50%;
-                        height: 50px;
-                        width: 50px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        cursor: pointer;
-
-                        &:not(last) {
-                            margin-right: 10px;
-                        }
-                    }
-                }
-
-                img {
-                    &.field {
-                        border-radius: 10px;
-                        max-height: 100vh;
-                    }
-                }
-
-                .player {
-                    //max-height: 100px;
-                    position: absolute;
-                    z-index: 1;
-
-                    &:not(.noDrag) {
-                        img.svg {
-                            transition: transform .3s;
-
-                            &:hover {
-                                transform: scale(1.05);
-                                fill: red;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 // Cant be in the desktop class because dragging it creates an element at the bottom of the body.
